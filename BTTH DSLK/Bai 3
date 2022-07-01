@@ -1,0 +1,316 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node
+{
+	int value;
+	Node *next;
+};
+
+void init(Node *&head)
+{
+	head = nullptr;
+}
+
+Node *createNode(int x)
+{
+	Node *p = new Node;
+	p->value = x;
+	p->next = nullptr;
+
+	return p;
+}
+
+bool isEmpty(Node *head)
+{
+	return head == nullptr;
+}
+
+void addHead(Node *&head, int x)
+{
+	Node *p = createNode(x);
+	p->next = head;
+	head = p;
+}
+
+void addTail(Node *&head, int x)
+{
+	Node *p = createNode(x);
+	if (isEmpty(head) == true)
+		head = p;
+	else
+	{
+		Node *tail = head;
+		while (tail->next != nullptr)
+			tail = tail->next;
+		tail->next = p;
+	}
+}
+
+void output(Node *head)
+{
+	Node *p = head;
+	while (p != nullptr)
+	{
+		cout << p->value << "\t";
+		p = p->next;
+	}
+
+	cout << endl;
+}
+
+Node* find(Node *head, int x)
+{
+	Node *p = head;
+	while (p != nullptr)
+	{
+		if (p->value == x)
+			return p;
+
+		p = p->next;
+	}
+
+	return nullptr;
+}
+
+Node* findMax(Node *head)
+{
+	Node *max = createNode(INT_MIN);
+	Node *p = head;
+	while (p != nullptr)
+	{
+		if (p->value > max->value)
+			max = p;
+
+		p = p->next;
+	}
+
+	return max;
+}
+
+bool isIncrease(Node *head)
+{
+	if (isEmpty(head) == true || head->next == nullptr)
+		return true;
+
+	Node *pre = head;
+	Node *p = pre->next;
+
+	while (p != nullptr)
+	{
+		if (pre->value > p->value)
+			return false;
+
+		pre = p;
+		p = pre->next;
+	}
+
+	return true;
+}
+
+void DeleteHead(Node*head)
+{
+	if (!isEmpty(head))
+	{
+		Node*p = head;
+		head = p->next;
+		delete p;
+	}
+}
+
+void DeleteTail(Node*head)
+{
+	if (!isEmpty(head))
+	{
+		Node*p = head;
+		Node*pre = nullptr;
+		while (p->next != nullptr)
+		{
+			pre = p;
+			p = p->next;
+		}
+		if (p != nullptr)
+			pre->next = nullptr;
+		else
+		{
+			head = nullptr;
+			delete p;
+		}
+	}
+}
+
+void Clear(Node*&head)
+{
+	while (head != nullptr)
+		DeleteHead(head);
+
+}
+void DeleteX(Node*head, int x)
+{
+	if (!isEmpty(head))
+	{
+		Node*p =head;
+		Node*pre = nullptr;
+		while (p != nullptr && p->value != x)
+		{
+			pre = p;
+			p = p->next;
+		}
+		if (p != nullptr)
+		{
+			if (pre != nullptr)
+				pre->next= p->next;
+			else
+			{
+				head = p->next;
+				p->next = nullptr;
+				delete p;
+			}
+		}
+	}
+}
+
+void AddAfter(Node*&head, int m, int x)
+{
+	if (!isEmpty(head))
+	{
+		Node*p = find(head, m);
+		while (p != nullptr && p->value != m)
+			p = p->next;
+		if (p != nullptr)
+		{
+			Node *r = createNode(x);
+			r->next = p->next;
+			p->next = r;
+		}
+	}
+}
+
+void AddBefore(Node*&head, int m, int x)
+{
+	if (!isEmpty(head))
+	{
+		Node*p = head;
+		Node*pre = nullptr;
+		while (p != nullptr && p->value != m)
+		{
+			pre = p;
+			p = p->next;
+		}
+		if (p != nullptr)
+		{
+			Node*r = createNode(x);
+			r->next = p;
+			if (pre == nullptr)
+				head = r;
+			else
+				pre->next = r;
+		}
+	}
+}
+
+void AddInc(Node*head, int x)
+{
+	Node*r = createNode(x);
+	if (isEmpty(head))
+		head = r;
+	else
+	{
+		Node*p = head;
+		Node*pre = nullptr;
+		while (p != nullptr && p->value < x)
+		{
+			pre = p;
+			p = p->next;
+		}
+		if (p != nullptr)
+		{
+			r->next = p;
+			if (pre == nullptr)
+				head = r;
+			else
+				pre->next = r;
+		}
+		else
+			pre->next = r;
+	}
+}
+
+void AddIndex(Node*&head,int i, int x)
+{
+	if (!isEmpty(head))
+	{
+		Node*p = head;
+		Node*pre = nullptr;
+		int count = 0;
+		while (p != nullptr && count < i )
+		{
+			pre = p;
+			p = p->next;
+			count++;
+		}
+		if (p != nullptr)
+		{
+			Node*r = createNode(x);
+			r->next = p;
+			if (pre == nullptr)
+				head = r;
+			else
+				pre->next = r;
+		}
+	}
+}
+
+int main()
+{
+	Node *head;
+	init(head);
+
+	/*addHead(head, 10);
+	addHead(head, 15);
+	addHead(head, 30);
+	addTail(head, 100);
+	addHead(head, 5);*/
+	addHead(head, 30);
+	addTail(head, 40);
+	addTail(head, 50);
+	addTail(head, 60);
+	addTail(head, 90);
+	output(head);
+
+	AddAfter(head, 90, 20);
+	output(head);
+	/*AddBefore(head, 90, 100);
+	output(head);*/
+	DeleteTail(head);
+	output(head);
+	DeleteX(head, 40);
+	output(head);
+	AddInc(head, 70);
+	output(head);
+	AddIndex(head, 2, 10);
+	output(head);
+	Clear(head);
+	output(head);
+
+
+
+	/*Node *r = find(head, 999);
+	if (r == nullptr)
+	cout << "KHONG\n";
+	else
+	cout << "CO\n";
+
+	Node *m = findMax(head);
+	cout << "Max = " << m->value << endl;
+
+	if (isIncrease(head) == true)
+	cout << "TANG\n";
+	else
+	cout << "KHONG TANG\n";*/
+
+	system("pause");
+
+	return 0;
+}
