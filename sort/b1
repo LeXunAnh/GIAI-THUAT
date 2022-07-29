@@ -1,0 +1,132 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+#define MAX 100
+
+struct Staff {
+	int id;
+	string fullName;
+	int month;
+	int year;
+};
+struct MyList {
+	Staff a[MAX];
+	int n;
+};
+Staff createStaff(int a, string b, int c, int d) {
+	Staff kq;
+	kq.id = a;
+	kq.fullName = b;
+	kq.month = c;
+	kq.year = d;
+	return kq;
+}
+
+MyList searchQuarter1(MyList li) {
+	MyList re;
+	re.n = 0;
+	for (int i = 0; i < li.n; i++)
+	{
+		if (li.a[i].month <= 3 && li.a[i].month >=1)
+		{
+			re.a[re.n++] = li.a[i];
+		}
+	}
+	return re;
+}
+void decreaseSortById(MyList &li) {
+	for (int i = 0; i < li.n - 1; i++)
+	{
+		int max_pos = i;
+		for (int j = i+1; j < li.n; j++)
+		{
+			if (li.a[j].id > li.a[max_pos].id)
+			{
+				max_pos = j;
+			}
+		}
+		swap(li.a[max_pos], li.a[i]);
+	}
+}
+int searchStaffById(MyList li, int l, int r, int id) {
+	while (l <= r) {
+		int mid = (l + r) / 2;	
+		Staff s = li.a[mid];
+		if (s.id == id)
+			return mid;
+		else if (s.id > id)
+			l = mid + 1;
+		else
+			r = mid - 1;
+	}
+	return -1;
+}
+void inSoftByMonth(MyList &li) {
+	for (int i = 0; i < li.n - 1; i++)
+	{	
+		for (int j = i+1; j < li.n; j++)
+		{
+			if (li.a[j].month == li.a[i].month) {
+				if (li.a[j].fullName < li.a[i].fullName)
+					swap(li.a[i], li.a[j]);
+			}
+			else if (li.a[j].month < li.a[i].month)
+				swap(li.a[i], li.a[j]);
+		}
+	}
+}
+
+void printOne(Staff NV) {
+	cout << "ID: " << NV.id << endl;
+	cout << "Name: " << NV.fullName << endl;
+	cout << "Month: " << NV.month << endl;
+	cout << "Year: " << NV.year << endl;
+	cout << "------------" << endl;
+}
+void printAll(MyList li) {
+	for (int i = 0; i < li.n; i++)
+	{
+		printOne(li.a[i]);
+	}
+}
+void swap(Staff &a, Staff &b) {
+	Staff c = a;
+	a = b;
+	b = c;
+}
+
+int main() {
+	MyList list;
+	list.n = 6;
+	list.a[0] = createStaff(4, "B", 2, 2003);
+	list.a[1] = createStaff(10, "F", 5, 2003);
+	list.a[2] = createStaff(7, "T", 2, 2003);
+	list.a[3] = createStaff(3, "Y", 3, 2003);
+	list.a[4] = createStaff(0, "G", 2, 2003);
+	list.a[5] = createStaff(9, "H", 1, 2003);
+
+	MyList q1 = searchQuarter1(list);
+	cout << "Nhan vien co thang sinh trong quy 1: \n";
+	printAll(q1);
+
+	decreaseSortById(list);
+	cout << "Danh sach sau khi sap xep ID giam dan: \n";
+	printAll(list);
+
+	int i = searchStaffById(list, 0, list.n, 7);
+	if (i >= 0)
+	{
+		cout << "Nhan vien can tim: \n";
+		printOne(list.a[i]);
+	}
+	else
+		cout << "Khong tim thay\n";
+
+	inSoftByMonth(list);
+	cout << "Sap xep tang dan theo thang sinh: \n";
+	printAll(list);
+
+	system("pause");
+	return 0;
+}
