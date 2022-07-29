@@ -1,0 +1,32 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+struct Student {
+	int id;
+	string name, dep;
+	double ave;
+};
+
+Student createStudent(int id, string name, string dep, double ave) {
+	Student s;
+	s.id = id;
+}
+
+struct Node{
+	Node *next;
+	Student data;
+};
+
+Node createNode(Student s) {
+	Node n;
+	n.next = NULL;
+	n.data = s;
+	return n;
+}
+
+int main() {
+
+
+	return 0;
+}
