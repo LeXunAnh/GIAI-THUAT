@@ -1,0 +1,142 @@
+//#include <iostream>
+//#include <string>
+//#define MAX 100
+//
+//using namespace std;
+//
+//struct Employee
+//{
+//	int id;
+//	string name;
+//	int month, year;
+//};
+//
+//struct MyList
+//{
+//	Employee e[MAX];
+//	int n;
+//};
+//
+//Employee createEmp(int id, string name, int m, int y)
+//{
+//	Employee e;
+//	e.id = id;
+//	e.name = name;
+//	e.month = m;
+//	e.year = y;
+//
+//	return e;
+//}
+//
+//void output(Employee em)
+//{
+//	cout << "Id = " << em.id << endl;
+//	cout << "Name = " << em.name << endl;
+//	cout << "Month = " << em.month << endl;
+//	cout << "Year = " << em.year << endl;
+//}
+//
+//void outputList(MyList ls)
+//{
+//	for (int i = 0; i < ls.n; i++)
+//		output(ls.e[i]);
+//}
+//
+//MyList searchByDob(MyList ls)
+//{
+//	MyList result;
+//	result.n = 0;
+//
+//	for (int i = 0; i < ls.n; i++)
+//		if (ls.e[i].month >= 1 && ls.e[i].month <= 3)
+//			result.e[result.n++] = ls.e[i];
+//
+//	return result;
+//}
+//
+//void swap(Employee& e1, Employee& e2)
+//{
+//	Employee e = e1;
+//	e1 = e2;
+//	e2 = e;
+//}
+//
+//void selectionSort(MyList& ls)
+//{
+//	for (int i = 0; i < ls.n - 1; i++)
+//	{
+//		int max_pos = i;
+//		for (int j = i + 1; j < ls.n; j++)
+//			if (ls.e[j].id > ls.e[max_pos].id)
+//				max_pos = j;
+//
+//		swap(ls.e[i], ls.e[max_pos]);
+//	}
+//}
+//
+//int binarySearch(MyList ls, int id)
+//{
+//	int left = 0;
+//	int right = ls.n - 1;
+//
+//	while (left <= right)
+//	{
+//		int mid = (left + right) / 2;
+//		Employee e1 = ls.e[mid];
+//
+//		if (e1.id == id)
+//			return mid;
+//		else if (e1.id > id)
+//			left = mid + 1;
+//		else
+//			right = mid - 1;
+//	}
+//
+//	return -1;
+//}
+//
+//void interchangeSort(MyList& ls)
+//{
+//	for (int i = 0; i < ls.n - 1; i++)
+//		for (int j = i + 1; j < ls.n; j++)
+//			if (ls.e[i].month == ls.e[j].month)
+//			{
+//				if (ls.e[i].name > ls.e[j].name)
+//					swap(ls.e[i], ls.e[j]);
+//			}
+//			else if (ls.e[i].month > ls.e[j].month)
+//				swap(ls.e[i], ls.e[j]);
+//}
+//
+//int main()
+//{
+//	MyList ls;
+//	ls.n = 5;
+//	ls.e[0] = createEmp(1, "NVH", 12, 2000);
+//	ls.e[1] = createEmp(2, "NVD", 3, 2000);
+//	ls.e[2] = createEmp(5, "NVE", 3, 2000);
+//	ls.e[3] = createEmp(8, "NVB", 3, 2000);
+//	ls.e[4] = createEmp(3, "NVA", 12, 2000);
+//
+//	cout << "=== TIM KIEM\n";
+//	MyList rs = searchByDob(ls);
+//	outputList(rs);
+//
+//	cout << "=== SAP XEP\n";
+//	selectionSort(ls);
+//	outputList(ls);
+//
+//	cout << "=== TIM KIEM NHI PHAN\n";
+//	int idx = binarySearch(ls, 999);
+//	if (idx >= 0)
+//		output(ls.e[idx]);
+//	else
+//		cout << "KHONG TIM THAY\n";
+//
+//	cout << "=== SAP XEP 2 TRUONG\n";
+//	interchangeSort(ls);
+//	outputList(ls);
+//
+//	system("pause");
+//	return 0;
+//}
