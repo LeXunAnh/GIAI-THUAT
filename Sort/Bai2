@@ -1,0 +1,143 @@
+#include <iostream>
+#include <ctime>
+
+#define MAX 100000
+
+using namespace std;
+
+void swap(int &a, int &b)
+{
+	int c = a;
+	a = b;
+	b = c;
+}
+
+void desQuickSort(int a[], int left, int right)
+{
+	int pivot = a[(left + right) / 2];
+	int i = left, j = right;
+	do {
+		while (a[i] > pivot)
+			i++;
+		while (a[j] < pivot)
+			j--;
+		if (i <= j)
+		{
+			swap(a[i], a[j]);
+			i++;
+			j--;
+		}
+	} while (i <= j);
+
+	if (left < j)
+		desQuickSort(a, left, j);
+	if (i < right)
+		desQuickSort(a, i, right);
+}
+
+void minHeap(int a[], int n)
+{
+	for (int i = n / 2 - 1; i >= 0; i--)
+	{
+		int jmin = 2 * i + 1;
+		int j = 2 * i + 2;
+		if (j < n &&a[j] < a[jmin])
+			jmin = j;
+
+		if (a[i] > a[jmin])
+			swap(a[i], a[jmin]);
+	}
+}
+
+void desHeapSort(int a[], int n)
+{
+	for (int i = 0; i < n - 1; i++)
+	{
+		minHeap(a, n - i);
+		swap(a[0], a[n - i - 1]);
+	}
+}
+
+void output(int a[], int n)
+{
+	for (int i = 0; i < n; i++)
+		cout << a[i] << "\t";
+	cout << endl;
+}
+
+bool isPrime(int x)
+{
+	if (x >= 2)
+	{
+		for (int i = 2; i <= sqrt(x); i++)
+			if (x % i == 0)
+				return false;
+
+		return true;
+	}
+	return false;
+}
+
+void desPrimeQuickSort(int a[], int left, int right)
+{
+	int pivot = INT_MAX; // a[(left + right) / 2];
+	for (int i = left; i <= right; i++)
+		if (isPrime(a[i]) == true)
+		{
+			pivot = a[i];
+			break;
+		}
+
+	if (pivot != INT_MAX)
+	{
+		int i = left, j = right;
+		do {
+			while (!isPrime(a[i]) || a[i] < pivot)
+				i++;
+			while (!isPrime(a[j]) || a[j] > pivot)
+				j--;
+			if (i <= j)
+			{
+				swap(a[i], a[j]);
+				i++;
+				j--;
+			}
+		} while (i <= j);
+
+		if (left < j)
+			desPrimeQuickSort(a, left, j);
+		if (i < right)
+			desPrimeQuickSort(a, i, right);
+	}
+	
+}
+
+int main()
+{
+	int a[] = { 17, 4, 5, 2, 8, -2, 7, -9, 10, 11 };
+	int n = sizeof(a) / sizeof(a[0]);
+
+	output(a, n);
+	desPrimeQuickSort(a, 0, n - 1);
+	output(a, n);
+
+	/*
+	int n = MAX;
+	int a[MAX];
+	for (int i = 0; i < n; i++)
+		a[i] = rand() % n;
+
+	clock_t s = clock();
+	desQuickSort(a, 0, n - 1);
+	clock_t e = clock();
+	cout << "QuickSort = " << e - s << endl;
+
+	s = clock();
+	desHeapSort(a, n);
+	e = clock();
+	cout << "HeapSort = " << e - s << endl;*/
+	//output(a, n);
+	//Counting Sort
+	system("pause");
+	return 0;
+}
