@@ -1,0 +1,97 @@
+#include <iostream>
+#include <string>
+#define MAX 100
+
+using namespace std;
+
+struct Stack
+{
+	char a[MAX][MAX];
+	int top;
+};
+
+void init(Stack& s)
+{
+	s.top = -1;
+}
+
+bool isFull(Stack s)
+{
+	return s.top == MAX;
+}
+
+bool isEmpty(Stack s)
+{
+	return s.top == -1;
+}
+
+void push(Stack& s, char x[])
+{
+	if (!isFull(s))
+		strcpy_s(s.a[++s.top], x);
+}
+
+char* pop(Stack& s)
+{
+	if (!isEmpty(s))
+		return s.a[s.top--];
+
+	return NULL;
+}
+
+void calc(char s[])
+{
+	Stack st;
+	init(st);
+
+	char* next;
+	char* item = strtok_s(s, " ", &next);
+	char result[MAX];
+	while (item != NULL)
+	{
+		if (strcmp(item, "+") == 0)
+		{
+			int b = atoi(pop(st));
+			int a = atoi(pop(st));
+			sprintf_s(result, "%d", a + b);
+			push(st, result);
+		}
+		else if (strcmp(item, "-") == 0)
+		{
+			int b = atoi(pop(st));
+			int a = atoi(pop(st));
+			sprintf_s(result, "%d", a - b);
+			push(st, result);
+		}
+		else if (strcmp(item, "*") == 0)
+		{
+			int b = atoi(pop(st));
+			int a = atoi(pop(st));
+			sprintf_s(result, "%d", a * b);
+			push(st, result);
+		}
+		else if (strcmp(item, "/") == 0)
+		{
+			int b = atoi(pop(st));
+			int a = atoi(pop(st));
+			sprintf_s(result, "%d", a / b);
+			push(st, result);
+		}
+		else
+			push(st, item);
+
+		item = strtok_s(NULL, " ", &next);
+	}
+
+	cout << "Ket qua: " << result << endl;
+}
+
+int main()
+{
+	char s[] = "10 5 + 2 * 3 / 2 / 10 *";
+	calc(s);
+
+	system("pause");
+
+	return 0;
+}
