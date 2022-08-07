@@ -1,0 +1,197 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node
+{
+	int value;
+	Node* next;
+	Node* previous;
+};
+
+void init(Node*& head, Node*& tail)
+{
+	head = nullptr;
+	tail = nullptr;
+}
+
+bool isEmpty(Node* head)
+{
+	return head == nullptr;
+}
+
+Node* createNode(int x)
+{
+	Node* p = new Node;
+	p->value = x;
+	p->next = nullptr;
+	p->previous = nullptr;
+
+	return p;
+}
+
+void addHead(Node*& head, Node*& tail, int x)
+{
+	Node* p = createNode(x);
+
+	p->next = head;
+
+	if (head != nullptr)
+		head->previous = p;
+	else
+		tail = p;
+
+	head = p;
+}
+
+void addTail(Node*& head, Node*& tail, int x)
+{
+	Node* p = createNode(x);
+
+	p->previous = tail;
+
+	if (tail != nullptr)
+		tail->next = p;
+	else
+		head = p;
+
+	tail = p;
+}
+
+void deleteHead(Node*& head, Node*& tail)
+{
+	if (!isEmpty(head))
+	{
+		Node* p = head;
+		head = p->next;
+		p->next = nullptr;
+
+		if (head != nullptr)
+			head->previous = nullptr;
+		else
+			tail = nullptr;
+
+		delete p;
+	}
+}
+
+void deleteTail(Node*& head, Node*& tail)
+{
+	if (!isEmpty(head))
+	{
+		Node* p = tail;
+
+		tail = p->previous;
+		p->previous = nullptr;
+
+		if (tail != nullptr)
+			tail->next = nullptr;
+		else
+			head = nullptr;
+
+		delete p;
+	}
+}
+
+void output1(Node* head)
+{
+	Node* p = head;
+	while (p != nullptr)
+	{
+		cout << p->value << "\t";
+		p = p->next;
+	}
+
+	cout << endl;
+}
+
+void output2(Node* tail)
+{
+	Node* p = tail;
+	while (p != nullptr)
+	{
+		cout << p->value << "\t";
+		p = p->previous;
+	}
+
+	cout << endl;
+}
+
+void clear(Node*& head, Node*& tail)
+{
+	while (!isEmpty(head))
+		deleteHead(head, tail);
+}
+
+void deleteIncK(Node*& head, Node*& tail, int k)
+{
+	if (!isEmpty(head))
+	{
+		if (k == 1)
+			deleteHead(head, tail);
+		else
+		{
+			Node* start = head;
+			while (start != nullptr)
+			{
+				Node* end = start->next;
+
+				int count = 1;
+				while (end != nullptr && end->value > end->previous->value)
+				{
+					count++;
+					if (count == k)
+					{
+						if (start->previous != nullptr)
+							start->previous->next = end->next;
+						else
+							head = end->next;
+
+						if (end->next != nullptr)
+							end->next->previous = start->previous;
+						else
+							tail = start->previous;
+
+						start->previous = nullptr;
+						end->next = nullptr;
+
+						clear(start, end);
+
+						return;
+					}
+					end = end->next;
+				}
+
+				start = end;
+			}
+		}
+	}
+}
+
+int main()
+{
+	Node* head, * tail;
+	init(head, tail);
+
+	/*addHead(head, tail, 10);
+	addHead(head, tail, 15);
+	addHead(head, tail, 20);
+	addHead(head, tail, 8);
+	addHead(head, tail, 5);*/
+	addTail(head, tail, 60);
+	addTail(head, tail, 88);
+	addTail(head, tail, 99);
+	addTail(head, tail, 100);
+	addTail(head, tail, 77);
+
+	output1(head);
+	deleteIncK(head, tail, 1);
+	output1(head);
+	/*deleteTail(head, tail);
+	output1(head);
+	clear(head, tail);
+	output1(head);*/
+
+	system("pause");
+	return 0;
+}
