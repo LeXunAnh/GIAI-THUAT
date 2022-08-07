@@ -1,0 +1,145 @@
+#include<iostream>
+#include<ctime>
+using namespace std;
+
+const long MAX = 10000000;
+long a[MAX];
+
+void inputarray(long a[], long n);
+
+void outputarray(long a[], long n);
+
+void hoandoi(long& a, long& b);
+
+void selectionSort(long a[], long n);
+
+void insertionSort(long a[], long n);
+
+void interchangeSort(long a[], long n);
+
+void bubbleSort(long a[], long n);
+
+int main()
+
+{
+
+	long n;
+	clock_t start, end;
+	double time_running;
+	srand(unsigned int(time(0)));
+	do {
+		cout << "n=";
+		cin >> n;
+		if (n > MAX || n < 1)
+			cout << "Nhap khong hop le, vui long nhap lai!\n";
+	} while (n > MAX || n < 1);
+	inputarray(a, n);
+	//outputarray(a, n);
+
+	cout << "===================SELECTION SORT===================\n ";
+	start = clock();
+	selectionSort(a, n);
+	end = clock();
+	time_running = (double)(end - start) / CLOCKS_PER_SEC;
+	cout << "Thoi gian chay thuat toan la: " << time_running << endl;
+
+	cout << "===================INSERTION SORT===================\n ";
+	start = clock();
+	insertionSort(a, n);
+	end = clock();
+	time_running = (double)(end - start) / CLOCKS_PER_SEC;
+	cout << "Thoi gian chay thuat toan la: " << time_running << endl;
+
+	cout << "===================INTERCHANGETION SORT===================\n ";
+	start = clock();
+	interchangeSort(a, n);
+	end = clock();
+	time_running = (double)(end - start) / CLOCKS_PER_SEC;
+	cout << "Thoi gian chay thuat toan la: " << time_running << endl;
+
+	cout << "====================BUBBLE SORT====================\n ";
+	start = clock();
+	bubbleSort(a, n);
+	end = clock();
+	time_running = (double)(end - start) / CLOCKS_PER_SEC;
+	cout << "Thoi gian chay thuat toan la: " << time_running << endl;
+
+	system("pause");
+	return 0;
+
+}
+
+void hoandoi(long& a, long& b)
+{
+	int temp;
+	temp = a;
+	a = b;
+	b = temp;
+}
+
+void inputarray(long a[], long n)
+
+{
+	for (int i = 0; i < n; i++)
+	{
+		a[i] = rand() % n + 1;
+	}
+}
+
+void outputarray(long a[], long n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		cout << a[i] << "\t";
+	}
+	cout << endl;
+}
+
+void selectionSort(long a[], long n)
+{
+	for (int i = 0; i < n - 1; i++)
+	{
+		long min = i;
+		for (int j = i + 1; j < n; j++)
+			if (a[j] < a[min])
+				min = j;
+		hoandoi(a[i], a[min]);
+	}
+	//outputarray(a, n);
+}
+
+void insertionSort(long a[], long n)
+{
+	for (int i = 1; i < n; i++)
+	{
+		int x = a[i];
+		int pos = i - 1;
+		while (pos >= 0 && a[pos] > x)
+		{
+			a[pos + 1] = a[pos];
+			pos--;
+		}
+		a[pos + 1] = x;
+	}
+	//outputarray(a, n);
+}
+
+void interchangeSort(long a[], long n)
+{
+	for (int i = 0; i < n - 1; i++)
+	{
+		for (int j = i + 1; j < n; j++)
+			if (a[i] > a[j])
+				hoandoi(a[i], a[j]);
+	}
+	//outputarray(a, n);
+}
+
+void bubbleSort(long a[], long n)
+{
+	for (int i = 0; i < n - 1; i++)
+		for (int j = n - 1; j > i; j--)
+			if (a[j] < a[j - 1])
+				hoandoi(a[j], a[j - 1]);
+	//outputarray(a, n);
+}
