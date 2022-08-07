@@ -1,0 +1,181 @@
+//#include <iostream>
+//
+//using namespace std;
+//
+//struct Fraction
+//{
+//	int t;
+//	int m;
+//};
+//
+//struct Node
+//{
+//	Fraction value;
+//	Node *next;
+//};
+//
+//void init(Node *&head)
+//{
+//	head = nullptr;
+//}
+//
+//Node *createNode(Fraction x)
+//{
+//	Node *p = new Node;
+//	p->value = x;
+//	p->next = nullptr;
+//
+//	return p;
+//}
+//
+//bool isEmpty(Node *head)
+//{
+//	return head == nullptr;
+//}
+//
+//void addHead(Node *&head, Fraction x)
+//{
+//	Node *p = createNode(x);
+//	p->next = head;
+//	head = p;
+//}
+//
+//void addTail(Node *&head, Fraction x)
+//{
+//	Node *p = createNode(x);
+//	if (isEmpty(head) == true)
+//		head = p;
+//	else
+//	{
+//		Node *tail = head;
+//		while (tail->next != nullptr)
+//			tail = tail->next;
+//		tail->next = p;
+//	}
+//}
+//
+//void outputFrac(Fraction p)
+//{
+//	cout << p.t << "/" << p.m << endl;
+//}
+//
+//int compareTo(Fraction p, Fraction q)
+//{
+//	double v1 = p.t * 1.0 / p.m;
+//	double v2 = q.t * 1.0 / q.m;
+//
+//	if (v1 > v2)
+//		return 1;
+//	else if (v1 < v2)
+//		return -1;
+//	return 0;
+//}
+//
+//Fraction createFrac(int t, int m)
+//{
+//	Fraction p;
+//	p.t = t;
+//	p.m = m;
+//
+//	return p;
+//}
+//
+//void output(Node *head)
+//{
+//	Node *p = head;
+//	while (p != nullptr)
+//	{
+//		//cout << p->value << "\t";
+//		outputFrac(p->value);
+//		p = p->next;
+//	}
+//
+//	cout << endl;
+//}
+//
+//Node* find(Node *head, Fraction x)
+//{
+//	Node *p = head;
+//	while (p != nullptr)
+//	{
+//		if (compareTo(p->value, x) == 0)
+//			return p;
+//
+//		p = p->next;
+//	}
+//
+//	return nullptr;
+//}
+//
+//Node* findMax(Node *head)
+//{
+//	Fraction t;
+//	t.t = INT_MIN;
+//	t.m = 1;
+//	Node *max = createNode(t);
+//
+//	Node *p = head;
+//	while (p != nullptr)
+//	{
+//		if (compareTo(p->value, max->value) > 0)
+//			max = p;
+//
+//		p = p->next;
+//	}
+//
+//	return max;
+//}
+//
+//bool isIncrease(Node *head)
+//{
+//	if (isEmpty(head) == true || head->next == nullptr)
+//		return true;
+//
+//	Node *pre = head;
+//	Node *p = pre->next;
+//
+//	while (p != nullptr)
+//	{
+//		if (compareTo(pre->value, p->value) > 0)
+//			return false;
+//
+//		pre = p;
+//		p = pre->next;
+//	}
+//
+//	return true;
+//}
+//
+//int main()
+//{
+//	Node *head;
+//	init(head);
+//
+//	addHead(head, createFrac(1, 5));
+//	addTail(head, createFrac(1, 3));
+//	addTail(head, createFrac(2, 3));
+//	addTail(head, createFrac(4, 3));
+//	addTail(head, createFrac(5, 3));
+//
+//	output(head);
+//
+//	Node *r = find(head, createFrac(4, 8));
+//	if (r == nullptr)
+//		cout << "KHONG\n";
+//	else
+//		cout << "CO\n";
+//
+//	Node *m = findMax(head);
+//	cout << "Max = ";
+//	outputFrac(m->value);
+//	//cout << "Max = " << m->value << endl;
+//
+//	if (isIncrease(head) == true)
+//		cout << "TANG\n";
+//	else
+//		cout << "KHONG TANG\n";
+//
+//	system("pause");
+//
+//	return 0;
+//}
